@@ -1,0 +1,131 @@
+<html>
+<head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.5/dist/leaflet-routing-machine.css">
+        <script src="https://unpkg.com/leaflet-routing-machine@3.2.5/dist/leaflet-routing-machine.js"></script>
+
+
+
+</head>
+
+<style>
+#map {
+  width: 100%;
+  height: 480px;
+}
+
+.leaflet-control-container .leaflet-routing-container-hide {
+    display: none;
+}
+</style>
+
+<body>
+<div id="map"></div>
+</body>
+
+<script>
+
+function distance(lat1, lon1, lat2, lon2, unit) {
+	if ((lat1 == lat2) && (lon1 == lon2)) {
+		return 0;
+	}
+	else {
+		var radlat1 = Math.PI * lat1/180;
+		var radlat2 = Math.PI * lat2/180;
+		var theta = lon1-lon2;
+		var radtheta = Math.PI * theta/180;
+		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+		if (dist > 1) {
+			dist = 1;
+		}
+		dist = Math.acos(dist);
+		dist = dist * 180/Math.PI;
+		dist = dist * 60 * 1.1515;
+		if (unit=="K") { dist = dist * 1.609344 }
+		if (unit=="N") { dist = dist * 0.8684 }
+		return dist;
+	}
+}
+
+const home = [53.355107, -1.486496]
+const dist = [0.005]
+
+const osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+const map = L.map('map', {
+  center: L.latLng(home[0], home[1]),
+  zoom: 13,
+  layers: [osm]
+});
+
+var npoints = 5
+
+
+const newpoints = []
+const randpoints = []
+
+for(var i=0; i<npoints*2; i++){
+	randpoints.push((Math.random()*dist)*[1,-1][Math.round(Math.random())])
+}
+
+for(var i=0; i<npoints; i++){
+ newpoints.push(
+ L.latLng(home[0]+randpoints[i*2], home[1]+randpoints[(i*2)+1])
+ )
+}
+
+route = []
+
+coords = []
+
+
+
+for(var i=0; i<newpoints.length; i++){
+		route.push([])
+    var holder = []
+
+		route[i] = L.Routing.control({
+      waypoints: [
+        newpoints[i],  newpoints[i]
+      ],
+      geometryOnly: true,
+      show: false,
+      waypointMode: 'snap',
+      fitSelectedRoutes: false,
+ 			createMarker: function(waypointIndex, waypoint, numberOfWaypoints) {
+			      
+			      coords.push([waypoint.latLng.lat, waypoint.latLng.lng])
+			      var marker = L.marker(waypoint.latLng)
+			      return marker
+			       }
+    }).addTo(map)
+    
+}
+
+
+
+setTimeout(function(){
+var waypoints=[];
+for(var i=0; i<npoints; i++){
+	route[i].spliceWaypoints(0,2)
+  waypoints.push(L.latLng(coords[npoints*2+i*2]));
+}
+
+
+
+
+marker = []
+
+for(i=0; i<waypoints.length; i++){
+  marker.push(L.marker(waypoints[i]).addTo(map)
+  )
+} 
+
+}, 100*npoints)
+
+</script>
+
+
+
+</html>
