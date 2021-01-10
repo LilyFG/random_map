@@ -21,6 +21,15 @@
 </style>
 
 <body>
+	
+<label for="npoints">How many points:</label>
+<input type="number" id="npoints" name="npoints" min="1" max="10">
+<br>
+<label for="radius">Search area diameter in miles:</label>
+<input type="number" id="diameter" name="diameter" min="1" max="5">
+<br>	
+	<button id="Go!" onclick="make_points()">Make points</button>
+	<br>
 <div id="map"></div>
 </body>
 
@@ -49,7 +58,7 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 }
 
 const home = [53.355107, -1.486496]
-const dist = [0.005]
+
 
 const osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 
@@ -59,8 +68,9 @@ const map = L.map('map', {
   layers: [osm]
 });
 
-var npoints = 5
-
+function make_points(){	
+const npoints = 5
+const dist = [0.005]
 
 const newpoints = []
 const randpoints = []
@@ -123,7 +133,8 @@ for(i=0; i<waypoints.length; i++){
 } 
 
 }, 100*npoints)
-
+}
+	
 </script>
 
 
