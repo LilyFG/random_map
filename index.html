@@ -67,6 +67,7 @@ button {
 	<button id="Go!" onclick="make_points()">Make points</button>
 	<br>
 <div id="map"></div>
+<div id=coords></div>
 </body>
 
 <script>
@@ -170,6 +171,8 @@ for(i=0; i<waypoints.length; i++){
 
 }, 100*npoints)
 }
+
+document.getElementById("coords").innerHTML = coords	
 	
 </script>
 
