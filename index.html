@@ -157,14 +157,18 @@ function make_points(){
 		
 		var usermarker = L.circle(home, 1).addTo(map);
 		
+		var icon2 = L.icon({iconUrl: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"})
+		
 		function onLocationFound(e) {
 		  var radius = e.accuracy / 2;
 		  usermarker.setLatLng(e.latlng);
-
+		  marker.map(thisMarker => if(distanceTo(thisMarker.getLatLng(), e.latlng) < 20){
+		  	marker.setIcon(icon2)})
 		}
 
 		map.on('locationfound', onLocationFound);
 		map.locate({setView: false, watch: true}).addTo(map);
+		
 
 		}, 100*npoints)
 
