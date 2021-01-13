@@ -63,7 +63,7 @@ button {
 </style>
 
 <body>
-Zoom = 16 Font = 50<br>	
+<div id="blurb" style="text-align:center;">Let's make some random points!</div>
 <label for="npoints">How many points:</label>
 <input type="number" id="npoints" name="npoints" min="1" max="10" value="5">
 <br>
@@ -72,7 +72,7 @@ Zoom = 16 Font = 50<br>
 <br>	
 	<button id="go" onclick="make_points()">Make points</button>
 	<br>
-<div id="map"></div>
+<div id="map" hidden></div>
 <div id="coords" style="width: 90%; overflow-wrap: break-word;"></div>
 </body>
 
@@ -89,75 +89,74 @@ const map = L.map('map', {
 });
 
 function make_points(){	
-const npoints = document.getElementById("npoints").value
-const dist = [document.getElementById("diameter").value*0.005]
 
-const newpoints = []
-const randpoints = []
-
-for(var i=0; i<npoints*2; i++){
-	randpoints.push((Math.random()*dist)*[1,-1][Math.round(Math.random())])
-}
-
-for(var i=0; i<npoints; i++){
- newpoints.push(
- L.latLng(home[0]+randpoints[i*2], home[1]+randpoints[(i*2)+1])
- )
-}
-
-route = []
-
-coords = []
-
-
-
-for(var i=0; i<newpoints.length; i++){
-		route.push([])
-    var holder = []
-
-		route[i] = L.Routing.control({
-      waypoints: [
-        newpoints[i],  newpoints[i]
-      ],
-      geometryOnly: true,
-      show: false,
-      waypointMode: 'snap',
-      fitSelectedRoutes: false,
- 			createMarker: function(waypointIndex, waypoint, numberOfWaypoints) {
-			      
-			      coords.push([waypoint.latLng.lat, waypoint.latLng.lng])
-			      var marker = L.marker(waypoint.latLng)
-			      return marker
-			       }
-    }).addTo(map)
-    
-}
-
-
-
-setTimeout(function(){
-var waypoints=[];
-for(var i=0; i<npoints; i++){
-	route[i].spliceWaypoints(0,2)
-  waypoints.push(L.latLng(coords[npoints*2+i*2]));
-}
-
-
-
-
-marker = []
-
-for(i=0; i<waypoints.length; i++){
-  marker.push(L.marker(waypoints[i]).addTo(map)
-  )
-} 
-
-document.getElementById("coords").innerHTML = coords	
-	
-}, 100*npoints)
-	
+	document.getElementById("map").removeAttribute("hidden"); 	
 
 	
+	const npoints = document.getElementById("npoints").value
+	const dist = [document.getElementById("diameter").value*0.005]
+
+	document.getElementById("blurb").remove()
+	document.getElementById("npoints").remove()
+	document.getElementById("diameter").remove()
+	
+	const newpoints = []
+	const randpoints = []
+
+	for(var i=0; i<npoints*2; i++){
+		randpoints.push((Math.random()*dist)*[1,-1][Math.round(Math.random())])
+	}
+
+	for(var i=0; i<npoints; i++){
+	 	newpoints.push(L.latLng(home[0]+randpoints[i*2], home[1]+randpoints[(i*2)+1]))
+	}
+
+	route = []
+
+	coords = []
+
+
+	for(var i=0; i<newpoints.length; i++){
+			route.push([])
+	    var holder = []
+
+			route[i] = L.Routing.control({
+	      waypoints: [
+		newpoints[i],  newpoints[i]
+	      ],
+	      geometryOnly: true,
+	      show: false,
+	      waypointMode: 'snap',
+	      fitSelectedRoutes: false,
+				createMarker: function(waypointIndex, waypoint, numberOfWaypoints) {
+
+				      coords.push([waypoint.latLng.lat, waypoint.latLng.lng])
+				      var marker = L.marker(waypoint.latLng)
+				      return marker
+				       }
+	    }).addTo(map)
+
+	}
+
+
+
+	setTimeout(function(){
+		var waypoints=[];
+		for(var i=0; i<npoints; i++){
+		  route[i].spliceWaypoints(0,2)
+		  waypoints.push(L.latLng(coords[npoints*2+i*2]));
+		}
+
+		marker = []
+
+		for(i=0; i<waypoints.length; i++){
+		  marker.push(L.marker(waypoints[i]).addTo(map))
+		} 
+
+
+		}, 100*npoints)
+
+
 }
 
 	
