@@ -153,6 +153,8 @@ function make_points(){
 		  marker.push(L.marker(waypoints[i]).addTo(map))
 		} 
 		
+		console.log(marker[0].getLatLng())
+		
 		var usermarker = L.circle(home, 1).addTo(map);
 		
 		function onLocationFound(e) {
