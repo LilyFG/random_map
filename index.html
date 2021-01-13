@@ -155,17 +155,18 @@ function make_points(){
 		
 		
 		
-		function onLocationFound(e) {
-		  var radius = e.accuracy / 2;
-		  if (!usermarker) {
-		  	usermarker = L.circle(e.latlng, radius).addTo(map);
-		  }else{
+// 		function onLocationFound(e) {
+// 		  var radius = e.accuracy / 2;
+// 			usermarker = L.circle(e.latlng, radius).addTo(map);
+// 		  if (!usermarker) {
+		  	
+// 		  }else{
 			  
-		  }
-		}
+// 		  }
+// 		}
 
-		map.on('locationfound', onLocationFound);
-		map.locate({setView: false, watch: true});
+// 		map.on('locationfound', onLocationFound);
+		map.locate({setView: false, watch: true}).addTo(map);
 
 		}, 100*npoints)
 
