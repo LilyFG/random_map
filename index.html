@@ -151,7 +151,8 @@ function make_points(){
 		for(i=0; i<waypoints.length; i++){
 		  marker.push(L.marker(waypoints[i]).addTo(map))
 		} 
-
+		
+		map.locate({setView: true, maxZoom: 16}); 
 
 		}, 100*npoints)
 
