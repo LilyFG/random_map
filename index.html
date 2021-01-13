@@ -159,13 +159,16 @@ function make_points(){
 		
 		var icon2 = L.icon({iconUrl: "https://cdn3.iconfinder.com/data/icons/flat-actions-icons-9/792/Tick_Mark_Dark-512.png", 
 				    iconSize: [30, 40], 
-				    iconAnchor: [20,40]})})
+				    iconAnchor: [20,40]})
 		
 		function onLocationFound(e) {
 		  var radius = e.accuracy / 2;
 		  usermarker.setLatLng(e.latlng);
-		  marker.map(function(thisMarker){if(thisMarker.getLatLng().distanceTo(e.latlng) < 20){
-		  	thisMarker.setIcon(icon2)}})
+		  marker.map(function(thisMarker){
+			  if(thisMarker.getLatLng().distanceTo(e.latlng) < 20){
+		  		thisMarker.setIcon(icon2)
+			  }
+		  })
 		}
 
 		map.on('locationfound', onLocationFound);
