@@ -79,16 +79,16 @@ button {
 
 <script>
 
-const home = L.latLng(home[53.355107], home[-1.486496])
+
 
 const osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 24});
 
 
 
 function make_points(){	
-
+	
 	document.getElementById("map").removeAttribute("hidden"); 	
-
+	const home = L.latLng(home[53.355107], home[-1.486496])
 	const map = L.map('map', {
 	  center: home,
 	  zoom: 16,
