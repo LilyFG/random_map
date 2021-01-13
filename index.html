@@ -79,9 +79,9 @@ button {
 
 <script>
 
-const home = [53.355107, -1.486496]
+const home = L.latLng(home[53.355107], home[-1.486496])
 
-const osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 20});
+const osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 24});
 
 
 
@@ -90,7 +90,7 @@ function make_points(){
 	document.getElementById("map").removeAttribute("hidden"); 	
 
 	const map = L.map('map', {
-	  center: L.latLng(home[0], home[1]),
+	  center: home,
 	  zoom: 16,
 	  layers: [osm]
 	});
@@ -153,19 +153,15 @@ function make_points(){
 		  marker.push(L.marker(waypoints[i]).addTo(map))
 		} 
 		
+		var usermarker = L.circle(home, 1).addTo(map);
 		
-		
-// 		function onLocationFound(e) {
-// 		  var radius = e.accuracy / 2;
-// 			usermarker = L.circle(e.latlng, radius).addTo(map);
-// 		  if (!usermarker) {
-		  	
-// 		  }else{
-			  
-// 		  }
-// 		}
+		function onLocationFound(e) {
+		  var radius = e.accuracy / 2;
+		  usermarker.setLatLng(e.latlng);
 
-// 		map.on('locationfound', onLocationFound);
+		}
+
+		map.on('locationfound', onLocationFound);
 		map.locate({setView: false, watch: true}).addTo(map);
 
 		}, 100*npoints)
