@@ -108,7 +108,7 @@ function make_points(){
 	}
 
 	for(var i=0; i<npoints; i++){
-	 	newpoints.push(L.latLng(home[0]+randpoints[i*2], home[1]+randpoints[(i*2)+1]))
+	 	newpoints.push(L.latLng(home.lat+randpoints[i*2], home.lng+randpoints[(i*2)+1]))
 	}
 
 	route = []
