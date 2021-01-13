@@ -162,8 +162,8 @@ function make_points(){
 		function onLocationFound(e) {
 		  var radius = e.accuracy / 2;
 		  usermarker.setLatLng(e.latlng);
-		  marker.map(thisMarker => if(distanceTo(thisMarker.getLatLng(), e.latlng) < 20){
-		  	marker.setIcon(icon2)})
+		  marker.map(function(thisMarker){if(distanceTo(thisMarker.getLatLng(), e.latlng) < 20){
+		  	marker.setIcon(icon2)}})
 		}
 
 		map.on('locationfound', onLocationFound);
