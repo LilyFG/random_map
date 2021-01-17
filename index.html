@@ -63,14 +63,14 @@ button {
 </style>
 
 <body>
-<div id="init"><div id="blurb" style="text-align:center;">Let's make some random points!</div>
-<label for="home">Centre point (defaults to device's current location)</label>
-<input type="text" id="home">
-<label for="npoints">How many points:</label>
+<div id="init"><div id="blurb" style="text-align:center;"><h1>Let's make some random points!</h1></div>
+<label for="home">Centre point latitude and longitude (defaults to device's current location):</label><br>
+<input type="text" id="home"><br>
+<label for="npoints">How many points:</label><br>
 <input type="number" id="npoints" name="npoints" min="1" max="10" value="5">
 <br>
-<label for="radius">Search area diameter (arbitrary units):</label>
-<input type="number" id="diameter" name="diameter" min="1" max="5" value="2">
+<label for="radius">Search area diameter (in km approx):</label><br>
+<input type="number" id="diameter" name="diameter" min="1" max="5" value="2"><br>
 <br>	
 <button id="go" onclick="make_points()">Make points</button>
 <br>
@@ -181,7 +181,7 @@ function make_points(){
 		map.locate({setView: false, watch: true}).addTo(map);
 		
 
-		}, 150*npoints)
+		}, 200+100*npoints)
 
 
 }
