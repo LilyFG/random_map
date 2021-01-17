@@ -64,6 +64,8 @@ button {
 
 <body>
 <div id="init"><div id="blurb" style="text-align:center;">Let's make some random points!</div>
+<label for="home">Centre point (defaults to device's current location)</label>
+<input type="text" id="home">
 <label for="npoints">How many points:</label>
 <input type="number" id="npoints" name="npoints" min="1" max="10" value="5">
 <br>
@@ -79,6 +81,9 @@ button {
 
 <script>
 
+navigator.geolocation.getCurrentPosition(function(position){
+ document.getElementById('home').val = position.coords.latitude+", "+position.coords.longitude
+})
 
 const home = L.latLng(53.355107, -1.486496)
 const osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 20});
@@ -86,7 +91,8 @@ const osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom
 
 
 function make_points(){	
-	
+	var home = L.latLng(document.getElementById('home').split(", ")[0],document.getElementById('home').split(", ")[1])
+
 	document.getElementById("map").removeAttribute("hidden"); 	
 	
 	const map = L.map('map', {
