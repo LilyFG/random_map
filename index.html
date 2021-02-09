@@ -116,6 +116,7 @@ function make_points(){
 	for(var i=0; i<npoints; i++){
 	 	newpoints.push(L.latLng(home.lat+randpoints[i*2], home.lng+randpoints[(i*2)+1]))
 	}
+	console.log(newpoints)
 
 	route = []
 
@@ -135,7 +136,6 @@ function make_points(){
 	      waypointMode: 'snap',
 	      fitSelectedRoutes: false,
 				createMarker: function(waypointIndex, waypoint, numberOfWaypoints) {
-
 				      coords.push([waypoint.latLng.lat, waypoint.latLng.lng])
 				      var marker = L.marker(waypoint.latLng)
 				      return marker
