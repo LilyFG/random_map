@@ -85,13 +85,13 @@ navigator.geolocation.getCurrentPosition(function(position){
  document.getElementById('home').value = position.coords.latitude+", "+position.coords.longitude
 })
 
-const home = L.latLng(53.355107, -1.486496)
+var home = L.latLng(53.355107, -1.486496)
 const osm = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 20});
 
 
 
 function make_points(){	
-	var home = L.latLng(document.getElementById('home').value.split(", ")[0],document.getElementById('home').value.split(", ")[1])
+	home = L.latLng(document.getElementById('home').value.split(", ")[0],document.getElementById('home').value.split(", ")[1])
 
 	document.getElementById("map").removeAttribute("hidden"); 	
 	
