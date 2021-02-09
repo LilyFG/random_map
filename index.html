@@ -150,13 +150,13 @@ function make_points(){
 		var waypoints=[];
 		for(var i=0; i<npoints; i++){
 		  route[i].spliceWaypoints(0,2)
-		  console.log(coords)
 		  waypoints.push(L.latLng(coords[npoints*2+i*2]));
 		}
 
 		marker = []
 
 		for(i=0; i<waypoints.length; i++){
+			console.log(L.marker(waypoints[i]))
 		  marker.push(L.marker(waypoints[i]).addTo(map))
 		} 
 		
